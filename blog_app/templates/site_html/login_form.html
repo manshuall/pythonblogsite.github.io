@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{%static 'js/validation.js'%}"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background: rgb(224, 224, 218);
+        }
+
+        .row {
+            background: white;
+            border-radius: 20px;
+        }
+
+        img {
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .btn1 {
+            background: rgb(7, 155, 7);
+            font-weight: bold;
+            color: black;
+        }
+
+        .btn:hover {
+            background: transparent !important;
+            color: black !important;
+            border-bottom: 2px solid black !important;
+            font-weight: bold !important;
+            transition: 1s;
+        }
+
+        p {
+            font-weight: 200;
+        }
+
+        @media only screen and (max-width: 992px) {
+            img {
+                display: none;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong>Message : </strong>{{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {%endfor%}
+    <section class="my-4 mx-5">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-lg-5">
+                    <img src="{% static '/images/bride-1822488_960_720.jpg'%}" alt="wedding-img" class="img-fluid">
+                </div>
+
+                <!-- login form details or from -->
+
+
+                <div class="col-lg-7 px-5 pt-5">
+                    <div class="heading">
+                        <h3 style="text-align:center" class="pb-5">Login With Us</h3>
+                    </div>
+                    <form action="User_login" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row d-flex align-items-center justify-content-center">
+                            <div class="col-lg-7">
+                                <input type="email" name="email" id="email" class="form-control align-items-center">
+                                <span id="error1" style="color:red"></span>
+                            </div>
+                        </div>
+                        <div class="form-row d-flex align-items-center justify-content-center">
+                            <div class="col-lg-7">
+                                <input type="password" name="password" class="form-control my-3" id="password">
+                                <span id="error2" style="color:red"></span>
+                            </div>
+                        </div>
+                        <div class="form-row d-flex align-items-center justify-content-center">
+                            <div class="col-lg-7">
+                                <button type="submit" id="submit" class="btn"
+                                    style="width:100%;background:black;color:white">Login</button>
+                                <p>Need accound? <a href="#" data-toggle="modal" data-target="#myModal">Sign Up</a></p>
+                                <p style="margin-top:-20px!important">Forget Password?<a href="#" data-toggle="modal"
+                                        data-target="#forget"> Link</a></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- sign_up_modal -->
+
+    <section>
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Sign Up</h3>
+                        <button class="close" type="button" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="register" method="POST">
+                            {% csrf_token %}
+                            <tr>
+                                <td>
+                                    Full Name:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="user_name" class="form-control"></td>
+                            </tr>
+
+                            Email/Gmail:
+                            </td>
+                            </tr>
+                            <tr>
+                                <td><input type="email" name="user_email" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Password:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="password" name="user_pass" id="user_pass" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td id="con_pass">
+                                    Confirm Password:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="password" name="user_con_pass" class="form-control" id="user_con_pass">
+                                </td>
+                                <span id="error_con_pass"></span>
+                            </tr><br />
+                            <tr>
+                                <td><button type="submit" class="form-control btn1" id="sign_up">Sign up</button>
+                            </tr>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="modal" id="forget">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Forget Password</h3>
+                        <button class="close" type="button" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="forget" method="POST">
+                            {% csrf_token %}
+                            <tr>
+                                <td>
+                                    Enter Email :
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="email" name="email_forget" class="form-control"></td>
+                            </tr><br />
+                            <tr>
+                                <td><button type="submit" class="form-control">Get OTP</button>
+                            </tr>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+
+</html>
